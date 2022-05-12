@@ -2,7 +2,14 @@ package cn.dxkite.mino.presenter;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.ProxyInfo;
 import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.util.Log;
 
 import org.yaml.snakeyaml.Yaml;
@@ -27,7 +34,7 @@ public class MainPresenter {
     private MinoConfig minoConfig=null;
     private Process minoProcess=null;
     //download文件夹有读写权限，跳过权限请求
-    private String minoConfigFilePath="/sdcard/Download/mino.yml";
+    private String minoConfigFilePath="/data/data/cn.dxkite.mino/files/mino.yml";
     private String minoPath=null;
     private MainPresenter(){};
 
@@ -109,6 +116,8 @@ public class MainPresenter {
         File minoConfigFile=new File(minoConfigFilePath);
         if(!minoConfigFile.exists())
             throw new MinoException("mino config file not exist");
+        if(minoConfig==null)
+            loadMinoConfig(null);
         return true;
     }
     private Process runShell(List<String> command)
@@ -162,6 +171,11 @@ public class MainPresenter {
             if(hasRun)
             {
                 mainInterface.showError("mino has already run");
+                Uri uri = Uri.parse("http://127.0.0.1"+minoConfig.getAddress());
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+
+                ((Context)mainInterface).startActivity(intent);
                 return;
             }
         } catch (IOException e) {
@@ -177,6 +191,20 @@ public class MainPresenter {
                 cmds.add("-conf");
                 cmds.add(minoConfigFilePath);
                 minoProcess=runShell(cmds);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    //获取WifiManager
+                    WifiManager wifiManager = (WifiManager) ((Context) mainInterface).getSystemService(Context.WIFI_SERVICE);
+                    WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+                    if (connectionInfo != null) {
+                        if (connectionInfo.getSSID() != null && !connectionInfo.getSSID().equals("")) {
+                            WifiConfiguration wifiConfiguration = new WifiConfiguration();
+                            ProxyInfo proxyInfo = ProxyInfo.buildDirectProxy("127.0.0.1", 1080);
+
+                            wifiConfiguration.setHttpProxy(proxyInfo);
+                            wifiManager.addNetwork(wifiConfiguration);
+                        }
+                    }
+                }
             }
         }catch (Exception e)
         {
@@ -186,6 +214,13 @@ public class MainPresenter {
     }
 
     public MinoConfig getMinoConfig() {
+        if(minoConfig==null)
+            try {
+                loadMinoConfig(null);
+            }catch (Exception e)
+            {
+                mainInterface.showError(e.getMessage());
+            }
         return minoConfig;
     }
 }

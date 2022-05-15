@@ -26,14 +26,13 @@ import java.util.List;
 
 import cn.dxkite.mino.entity.MinoConfig;
 import cn.dxkite.mino.exception.MinoException;
+import cn.dxkite.mino.service.MinoService;
 import cn.dxkite.mino.view.inter.MainInterface;
 
 public class MainPresenter {
     private String TAG=MainPresenter.class.getSimpleName();
     private  MainInterface mainInterface;
     private MinoConfig minoConfig=null;
-    private Process minoProcess=null;
-    //download文件夹有读写权限，跳过权限请求
     private String minoConfigFilePath="/data/data/cn.dxkite.mino/files/mino.yml";
     private String minoPath=null;
     private MainPresenter(){};
@@ -145,66 +144,17 @@ public class MainPresenter {
     }
     public void stop()
     {
-        //todo release source
-        if(minoProcess!=null)
-        {
-            minoProcess.destroy();
-        }
+        ((Context)mainInterface).stopService(new Intent((Context) mainInterface, MinoService.class));
         saveMinoConfig(minoConfigFilePath);
     }
 
     public void start() {
-        List<String>cmds=new ArrayList<>();
-        boolean hasRun=false;
-        cmds.add("ps");
-        cmds.add("-A");
-        Process process =runShell(cmds);
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));){
-            String s;
-            while ((s = in.readLine()) != null) {
-                s = s.toLowerCase();
-                if (s.contains("libmino.so")) {
-                    hasRun=true;
-                    break;
-                }
-            }
-            if(hasRun)
-            {
-                mainInterface.showError("mino has already run");
-                Uri uri = Uri.parse("http://127.0.0.1"+minoConfig.getAddress());
 
-                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
-
-                ((Context)mainInterface).startActivity(intent);
-                return;
-            }
-        } catch (IOException e) {
-            mainInterface.showError(e.getMessage());
-            return;
-        }
 
         try{
             if(checkMino())
             {
-                cmds.clear();
-                cmds.add(minoPath);
-                cmds.add("-conf");
-                cmds.add(minoConfigFilePath);
-                minoProcess=runShell(cmds);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    //获取WifiManager
-                    WifiManager wifiManager = (WifiManager) ((Context) mainInterface).getSystemService(Context.WIFI_SERVICE);
-                    WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-                    if (connectionInfo != null) {
-                        if (connectionInfo.getSSID() != null && !connectionInfo.getSSID().equals("")) {
-                            WifiConfiguration wifiConfiguration = new WifiConfiguration();
-                            ProxyInfo proxyInfo = ProxyInfo.buildDirectProxy("127.0.0.1", 1080);
-
-                            wifiConfiguration.setHttpProxy(proxyInfo);
-                            wifiManager.addNetwork(wifiConfiguration);
-                        }
-                    }
-                }
+                ((Context)mainInterface).startService(new Intent((Context) mainInterface, MinoService.class));
             }
         }catch (Exception e)
         {

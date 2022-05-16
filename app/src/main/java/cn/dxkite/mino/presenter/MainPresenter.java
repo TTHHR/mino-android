@@ -33,7 +33,7 @@ public class MainPresenter {
     private String TAG=MainPresenter.class.getSimpleName();
     private  MainInterface mainInterface;
     private MinoConfig minoConfig=null;
-    private String minoConfigFilePath="/data/data/cn.dxkite.mino/files/mino.yml";
+    private String minoConfigFilePath="/data/data/cn.dxkite.mino/mino.yml";
     private String minoPath=null;
     private MainPresenter(){};
 
@@ -92,6 +92,17 @@ public class MainPresenter {
     {
         if(minoConfig!=null)
         {
+            File file=new File(path);
+            if(!file.exists())
+            {
+                try{
+                    file.createNewFile();
+                }
+                catch(Exception e)
+                {
+                    
+                }
+            }
             try(FileWriter fw=new FileWriter(path))
             {
                 Yaml yaml = new Yaml();
@@ -112,11 +123,11 @@ public class MainPresenter {
             Log.e(TAG,"mino not exist");
             throw new MinoException("mino not exist");
         }
+         if(minoConfig==null)
+            loadMinoConfig(null);
         File minoConfigFile=new File(minoConfigFilePath);
         if(!minoConfigFile.exists())
             throw new MinoException("mino config file not exist");
-        if(minoConfig==null)
-            loadMinoConfig(null);
         return true;
     }
     private Process runShell(List<String> command)

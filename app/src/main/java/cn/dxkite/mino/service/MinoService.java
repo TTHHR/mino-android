@@ -30,7 +30,7 @@ public class MinoService extends Service {
     private boolean running=false;
     private Thread minoThread=null;
     private String minoPath=null;
-    private String minoConfigFilePath="/data/data/cn.dxkite.mino/files/mino.yml";
+    private String minoConfigFilePath="/data/data/cn.dxkite.mino/mino.yml";
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

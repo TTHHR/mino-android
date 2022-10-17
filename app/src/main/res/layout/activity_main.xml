@@ -1,72 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.MainActivity">
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/titleBar"
+    <EditText
+        android:id="@+id/minoUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        >
+        android:text="mino://tian:CEABE6CAD1B8773F369DE58C1D8DB206@8.210.250.201:28648" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="MinoApp" />
 
-        <Button
-            android:id="@+id/aboutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="about" />
-    </LinearLayout>
-
-    <LinearLayout
+    <CheckBox
+        android:id="@+id/xxorCheckBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/titleBar"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="XXOR" />
 
-        <TextView
-            android:id="@+id/configText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="app can auto save config file!" />
+    <EditText
+        android:id="@+id/xxorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:hint="mino"
+        android:text="mino"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/startButton"
-            android:layout_marginTop="18dp"
-            android:text="start"
-            android:layout_height="wrap_content"
-             android:layout_width="wrap_content"
-            />
+    <CheckBox
+        android:id="@+id/logCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开日志" />
+    <CheckBox
+        android:id="@+id/dnsCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="使用DNS" />
 
-        <Button
-            android:id="@+id/stopButton"
+
+    <EditText
+        android:id="@+id/dnsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:hint="180.76.76.76"
+        android:text="180.76.76.76"
+        android:visibility="gone" />
+    <CheckBox
+        android:id="@+id/appCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开启应用过滤" />
+    <Button
+        android:id="@+id/startbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="开始" />
+
+    <Button
+        android:id="@+id/stopbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="stop" />
-        <Button
-            android:id="@+id/showConfigButton"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="show current config" />
-        <Button
-            android:id="@+id/importButton"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="import a config file" />
-    </LinearLayout>
-</RelativeLayout>
+            android:orientation="vertical" >
+        <EditText
+            android:id="@+id/logText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

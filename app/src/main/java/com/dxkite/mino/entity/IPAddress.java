@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.entity;
+package com.dxkite.mino.entity;
 
 public class IPAddress{
     public final String Address;

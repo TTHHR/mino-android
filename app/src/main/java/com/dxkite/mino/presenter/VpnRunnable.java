@@ -1,20 +1,18 @@
-package com.yaasoosoft.anyvpn.presenter;
+package com.dxkite.mino.presenter;
 
 import static java.lang.Short.MAX_VALUE;
 
 import android.util.Log;
 
-import com.yaasoosoft.anyvpn.entity.*;
-import com.yaasoosoft.anyvpn.utils.Resource;
+import com.dxkite.mino.entity.*;
+import com.dxkite.mino.utils.Resource;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public  class VpnRunnable implements Runnable
     {

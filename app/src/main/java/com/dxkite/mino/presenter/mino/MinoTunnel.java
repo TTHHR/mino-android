@@ -1,12 +1,12 @@
-package com.yaasoosoft.anyvpn.presenter.mino;
+package com.dxkite.mino.presenter.mino;
 
 import android.util.Log;
 
 import com.google.common.primitives.Longs;
-import com.yaasoosoft.anyvpn.MainActivity;
-import com.yaasoosoft.anyvpn.presenter.DnsProxy;
-import com.yaasoosoft.anyvpn.presenter.Settings;
-import com.yaasoosoft.anyvpn.presenter.Tunnel;
+import com.dxkite.mino.MainActivity;
+import com.dxkite.mino.presenter.DnsProxy;
+import com.dxkite.mino.presenter.Settings;
+import com.dxkite.mino.presenter.Tunnel;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;

@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.entity;
+package com.dxkite.mino.entity;
  
 public class DnsFlags {
 	 public boolean QR;//1 bits

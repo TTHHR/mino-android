@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.entity;
+package com.dxkite.mino.entity;
 
 public class UDPHeader {
 	static final short offset_src_port = 0; // Source port

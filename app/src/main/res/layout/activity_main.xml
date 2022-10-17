@@ -12,7 +12,7 @@
         android:id="@+id/minoUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="mino://tian:CEABE6CAD1B8773F369DE58C1D8DB206@8.210.250.201:28648" />
+        android:text="mino://sss:sss@8.111.111.201:111" />
 
 
     <CheckBox

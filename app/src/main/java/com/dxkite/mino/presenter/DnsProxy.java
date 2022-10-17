@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.presenter;
+package com.dxkite.mino.presenter;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,14 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.yaasoosoft.anyvpn.AmService;
-import com.yaasoosoft.anyvpn.entity.CommonMethods;
-import com.yaasoosoft.anyvpn.entity.DnsPacket;
-import com.yaasoosoft.anyvpn.entity.IPHeader;
+import com.dxkite.mino.AmService;
+import com.dxkite.mino.entity.CommonMethods;
+import com.dxkite.mino.entity.DnsPacket;
+import com.dxkite.mino.entity.IPHeader;
 
-import com.yaasoosoft.anyvpn.entity.Question;
-import com.yaasoosoft.anyvpn.entity.ResourcePointer;
-import com.yaasoosoft.anyvpn.entity.UDPHeader;
+import com.dxkite.mino.entity.Question;
+import com.dxkite.mino.entity.ResourcePointer;
+import com.dxkite.mino.entity.UDPHeader;
 
 
 public class DnsProxy implements Runnable {

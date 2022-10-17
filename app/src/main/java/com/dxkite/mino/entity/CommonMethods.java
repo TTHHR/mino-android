@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.entity;
+package com.dxkite.mino.entity;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

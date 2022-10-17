@@ -1,11 +1,11 @@
-package com.yaasoosoft.anyvpn.service;
+package com.dxkite.mino.service;
 
 import android.util.Log;
 
-import com.yaasoosoft.anyvpn.entity.NatSession;
-import com.yaasoosoft.anyvpn.presenter.NatSessionManager;
-import com.yaasoosoft.anyvpn.presenter.Tunnel;
-import com.yaasoosoft.anyvpn.presenter.TunnelFactory;
+import com.dxkite.mino.entity.NatSession;
+import com.dxkite.mino.presenter.NatSessionManager;
+import com.dxkite.mino.presenter.Tunnel;
+import com.dxkite.mino.presenter.TunnelFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

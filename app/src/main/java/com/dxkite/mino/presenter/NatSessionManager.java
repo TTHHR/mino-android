@@ -1,10 +1,10 @@
-package com.yaasoosoft.anyvpn.presenter;
+package com.dxkite.mino.presenter;
 
 
 import android.util.SparseArray;
 
-import com.yaasoosoft.anyvpn.entity.CommonMethods;
-import com.yaasoosoft.anyvpn.entity.NatSession;
+import com.dxkite.mino.entity.CommonMethods;
+import com.dxkite.mino.entity.NatSession;
 
 public class NatSessionManager {
 

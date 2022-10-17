@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn;
+package com.dxkite.mino;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -16,10 +16,10 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 
-import com.yaasoosoft.anyvpn.presenter.Settings;
-import com.yaasoosoft.anyvpn.presenter.VpnRunnable;
-import com.yaasoosoft.anyvpn.service.LocalTcpServer;
-import com.yaasoosoft.anyvpn.utils.Resource;
+import com.dxkite.mino.presenter.Settings;
+import com.dxkite.mino.presenter.VpnRunnable;
+import com.dxkite.mino.service.LocalTcpServer;
+import com.dxkite.mino.utils.Resource;
 
 import java.nio.channels.Selector;
 

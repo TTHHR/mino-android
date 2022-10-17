@@ -1,10 +1,9 @@
-package com.yaasoosoft.anyvpn.presenter;
+package com.dxkite.mino.presenter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
-import com.yaasoosoft.anyvpn.AmService;
-import com.yaasoosoft.anyvpn.MainActivity;
+import com.dxkite.mino.AmService;
+import com.dxkite.mino.MainActivity;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

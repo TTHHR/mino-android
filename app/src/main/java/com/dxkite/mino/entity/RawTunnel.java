@@ -1,6 +1,6 @@
-package com.yaasoosoft.anyvpn.entity;
+package com.dxkite.mino.entity;
 
-import com.yaasoosoft.anyvpn.presenter.Tunnel;
+import com.dxkite.mino.presenter.Tunnel;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

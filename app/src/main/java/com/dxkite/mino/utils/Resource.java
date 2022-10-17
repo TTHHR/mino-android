@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.utils;
+package com.dxkite.mino.utils;
 
 import java.io.Closeable;
 

@@ -1,4 +1,4 @@
-package com.yaasoosoft.anyvpn.presenter;
+package com.dxkite.mino.presenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,8 @@
 name: Build and Release APK
 
 on:
+  push:
+    branches: [ main, master, shadowsocks ]
   workflow_dispatch:
     inputs:
       tag:

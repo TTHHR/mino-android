@@ -1,0 +1,89 @@
+name: Build and Release APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, for example v5.3.5-mino. Leave empty to use the run number.
+        required: false
+        type: string
+      release_name:
+        description: Release title. Leave empty to reuse the tag.
+        required: false
+        type: string
+      prerelease:
+        description: Mark the GitHub release as a prerelease.
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: jetbrains
+          java-version: 21
+
+      - name: Set up Rust targets
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: armv7-linux-androideabi,aarch64-linux-android,i686-linux-android,x86_64-linux-android
+
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Cargo cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            core/src/main/rust/shadowsocks-rust/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('core/src/main/rust/shadowsocks-rust/Cargo.lock') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-
+
+      - name: Build release APKs
+        run: ./gradlew :mobile:assembleRelease -PCARGO_PROFILE=release
+
+      - name: Prepare release assets
+        env:
+          TAG_INPUT: ${{ inputs.tag }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          tag="${TAG_INPUT:-manual-${RUN_NUMBER}}"
+          mkdir -p release-assets
+          for apk in mobile/build/outputs/apk/release/*.apk; do
+            abi="$(basename "$apk" | sed -E 's/^mobile-(.*)-release.*\.apk$/\1/')"
+            cp "$apk" "release-assets/shadowsocks-${abi}-${tag}.apk"
+          done
+          ls -lh release-assets
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || format('manual-{0}', github.run_number) }}
+          name: ${{ inputs.release_name || inputs.tag || format('manual-{0}', github.run_number) }}
+          prerelease: ${{ inputs.prerelease }}
+          files: release-assets/*.apk

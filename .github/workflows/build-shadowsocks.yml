@@ -1,8 +1,8 @@
-name: Build and Release APK
+name: Build shadowsocks
 
 on:
   push:
-    branches: [ main, master, shadowsocks ]
+    branches: [ shadowsocks ]
   workflow_dispatch:
     inputs:
       tag:
@@ -66,7 +66,7 @@ jobs:
             cargo-${{ runner.os }}-
 
       - name: Build release APKs
-        run: ./gradlew :mobile:assembleRelease -PCARGO_PROFILE=release
+        run: ./gradlew :mobile:assembleRelease -PCARGO_PROFILE=release -Pandroid.injected.signing.store.file=$HOME/.android/debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android
 
       - name: Prepare release assets
         env:
@@ -74,7 +74,7 @@ jobs:
           RUN_NUMBER: ${{ github.run_number }}
         run: |
           set -euo pipefail
-          tag="${TAG_INPUT:-manual-${RUN_NUMBER}}"
+          tag="${TAG_INPUT:-shadowsocks-${RUN_NUMBER}}"
           mkdir -p release-assets
           for apk in mobile/build/outputs/apk/release/*.apk; do
             abi="$(basename "$apk" | sed -E 's/^mobile-(.*)-release.*\.apk$/\1/')"
@@ -85,7 +85,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.tag || format('manual-{0}', github.run_number) }}
-          name: ${{ inputs.release_name || inputs.tag || format('manual-{0}', github.run_number) }}
+          tag_name: ${{ inputs.tag || format('shadowsocks-{0}', github.run_number) }}
+          name: ${{ inputs.release_name || inputs.tag || format('shadowsocks-{0}', github.run_number) }}
           prerelease: ${{ inputs.prerelease }}
           files: release-assets/*.apk
